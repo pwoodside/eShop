@@ -4,5 +4,5 @@ image: microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m36
 tasks:
   - name: powershell
     description: Install Chocolatey, then use it to install Azure Developer CLI (azd) and Visual Studio Code
-    parameters:
+    inputs:
       command: "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); choco install azd vscode -y"
