@@ -19,10 +19,11 @@ tasks:
     inputs:
       command: |
         choco install azd -y
-       version
+        azd --version
 
   - name: powershell
     description: "Install Visual Studio Code"
        inputs:
       command: |
         choco install vscode -y
+
