@@ -22,8 +22,6 @@ tasks:
 
   - name: powershell
     description: "Install Visual Studio Code"
-       inputs:
+    inputs:
       command: |
         choco install vscode -y
-
-
