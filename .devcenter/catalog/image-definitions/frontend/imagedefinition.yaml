@@ -3,6 +3,6 @@ name: frontend-dev
 image: microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2
 tasks:
 - name: powershell
-  timeout: 1800 # in seconds
-  parameters:
+  timeout: 1800
+  inputs:
     command: "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); choco install azd vscode -y"
