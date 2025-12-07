@@ -1,24 +1,28 @@
+
 $schema: "1.0"
 name: "frontend-dev"
 image: microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2
 description: "This definition is for the eShop frontend engineering environment"
 
 tasks:
-  - name: winget
-    parameters:
-      downloadUrl: 'https://raw.githubusercontent.com/contoso-co/common-eng-sys/msft-git/dsc-configurations/common-config.dsc.yaml'
-
-  - name: winget
-    description: Install AZD
-    parameters:
-      package:  Microsoft.Azd
-
-  - name: winget
-    description: Install Visual Studio Code
-    parameters:
-      package:  Microsoft.VisualStudioCode
+  - name: powershell
+    description: "Install Chocolatey package manager"
+    inputs:
+      command: |
+        Set-ExecutionPolicy Bypass -Scope Process -Force
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+        iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        choco feature enable -n=allowGlobalConfirmation
 
   - name: powershell
-    parameters:
+    description: "Install Azure Developer CLI"
+    inputs:
       command: |
-        $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') 
+        choco install azd -y
+        azd --version
+
+  - name: powershell
+    description: "Install Visual Studio Code"
+    inputs:
+      command: |
+               choco install vscode -y
