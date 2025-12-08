@@ -1,14 +1,39 @@
 $schema: 1.0
 name: frontend-dev
 image: microsoftwindowsdesktop_windows-ent-cpc_win11-25h2-ent-cpc
+
 tasks:
-- name: simple-test
-  timeout: 1800 # in seconds
-  parameters:
-    command: |
-      # Create a test file in Desktop
-      $desktop = Join-Path $Env:UserProfile 'Desktop'
-      $filePath = Join-Path $desktop 'test.txt'
-      "Hello from PowerShell!" | Out-File -FilePath $filePath -Encoding UTF8
-      Write-Host "Created file: $filePath"
+  - name: powershell
+    timeout: 1800
+    parameters:
+      command: |
+        # Safely append a tool folder to PATH for the current user
+        $toolDir = 'C:\Tools\MyBin'
+
+        # Ensure the directory exists
+        if (-not (Test-Path $toolDir)) {
+          New-Item -ItemType Directory -Path $toolDir | Out-Null
+        }
+
+        # Read existing PATH (User scope)
+        $userPath = [System.Environment]::GetEnvironmentVariable('Path', 'User')
+
+        # Append only if not already present
+        if ($userPath -notlike "*$toolDir*") {
+          $newUserPath = ($userPath.TrimEnd(';') + ';' + $toolDir).TrimStart(';')
+          [System.Environment]::SetEnvironmentVariable('Path', $newUserPath, 'User')
+          Write-Host "User PATH updated with: $toolDir"
+        } else {
+          Write-Host "User PATH already contains: $toolDir"
+        }
+
+        # Also update PATH for the current process so subsequent commands see it immediately
+        $env:Path = ($env:Path.TrimEnd(';') + ';' + $toolDir).TrimStart(';')
+
+        # Example: write a test file to Desktop
+        $desktop = Join-Path $Env:UserProfile 'Desktop'
+        $filePath = Join-Path $desktop 'test.txt'
+        "Hello from PowerShell!" | Out-File -FilePath $filePath -Encoding UTF8
+        Write-Host "Created file: $filePath"
+
 
