@@ -1,8 +1,13 @@
 $schema: 1.0
 name: frontend-dev
-image: microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2
+image: MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365
 tasks:
-- name: powershell
+- name: simple-test
   timeout: 1800 # in seconds
   parameters:
-    command: "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); choco install azd vscode -y"
+    command: |
+      # Create a test file in Desktop
+      $desktop = Join-Path $Env:UserProfile 'Desktop'
+      $filePath = Join-Path $desktop 'test.txt'
+      "Hello from PowerShell!" | Out-File -FilePath $filePath -Encoding UTF8
+      Write-Host "Created file: $filePath"
