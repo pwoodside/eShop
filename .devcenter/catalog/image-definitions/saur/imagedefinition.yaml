@@ -1,1 +1,16 @@
-test
+$schema: "1.0"
+name: "dev-box-with-tools"
+image: microsoftvisualstudio_visualstudioplustools_vs-2022-ent-general-win11-m365-gen2
+tasks:
+  - name: install-notepadplusplus
+    description: Install Notepad++ text editor
+    parameters:
+      command: winget install --exact --id Notepad++.Notepad++ --silent --accept-source-agreements --accept-package-agreements
+  - name: install-nodejs
+    description: Install Node.js LTS (Long Term Support) version
+    parameters:
+      command: winget install --exact --id OpenJS.NodeJS.LTS --silent --accept-source-agreements --accept-package-agreements
+  - name: install-python
+    description: Install Python 3.13
+    parameters:
+      command: winget install --exact --id Python.Python.3.13 --silent --accept-source-agreements --accept-package-agreements
