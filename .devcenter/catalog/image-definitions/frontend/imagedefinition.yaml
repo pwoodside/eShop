@@ -1,6 +1,6 @@
 $schema: 1.0
 name: frontend-dev
-image: MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365
+image: microsoftwindowsdesktop_windows-ent-cpc_win11-25h2-ent-cpc
 tasks:
 - name: simple-test
   timeout: 1800 # in seconds
@@ -11,3 +11,4 @@ tasks:
       $filePath = Join-Path $desktop 'test.txt'
       "Hello from PowerShell!" | Out-File -FilePath $filePath -Encoding UTF8
       Write-Host "Created file: $filePath"
+
